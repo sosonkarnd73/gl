@@ -1,0 +1,14 @@
+This file contains details of work done
+1. recursive_bspline.c
+	This file comtains the implementation of B Spline Curves over opengl in c. using Cox De Bhoor recursive algorithm.
+	The input to this program is the type of curve
+	Its parameters : knot_vector, number_of_knots, control_points, number of control_points
+
+2. create_input.c
+	This file is used to create the inpuf for recursive_bspline.c to generate a random bspline curve
+	input to this file will be number of control points and degree of bspline curve to be generated.
+
+3. work01.c and work02.c are two implementations of bspline curves with animating curves.
+ input files generated and used with above programs : 
+     wave_open wave_clamped output_closed hexagon_open hexagon clamped
+     

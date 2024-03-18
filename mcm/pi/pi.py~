@@ -1,0 +1,12 @@
+import random
+num=0
+count=0
+for i in range(1,1000000):
+    x = random.uniform(0,1)
+    y = random.uniform(0,1)
+    z = (x**2+y**2)**(0.5)
+    num = num+1
+    if(z<1.0001 and  z>0.9990):
+        count = count+1
+    
+print("Value of pi : ",(4*count)/num)

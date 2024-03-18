@@ -1,0 +1,21 @@
+bspline_param_length.c :
+	This program takes input to create bspline curve and find ratio of segment length between u1 and u2 which are also taken as input.
+	u1  and u2 are knot values which range between [0,1]
+	the random input for this program is created using create_input.c program.
+
+	to calculate the length of segment I calculated points A, B on curve corresponding to u1 and u2 resp.
+	then find closest points from this two points A, B from plotted points and note the distance as md1, md2 resp.
+	then using this details iterate over all plotted points and accumulate the lengths for segment and curve
+	and take ratio.
+	input to this program is given using following files
+	      output
+	      output1
+	      shape
+create_input.c :
+        input parameters are curve_type number of control_points and degree of curve.
+	this will generate output in desired format for bspline)param_length.c
+	control points are random numbers
+	knot vector values depend on the type of curve.
+        input to this program is given using
+	      input1
+
