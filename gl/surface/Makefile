@@ -1,3 +1,6 @@
-LDLIBS=-lGLEW -lGL -lGLU -lglut  
-surface: Vec3.h main.cpp
-	g++ main.cpp -o surface $(LDLIBS)
+LDLIBS=-lglut -lGLEW -lGL -lm
+all: surface
+clean:
+	rm -f *.o cube
+surface: ./shader_utils.o
+.PHONY: all clean
