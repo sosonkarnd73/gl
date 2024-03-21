@@ -61,6 +61,20 @@ int init_resources()
   glBufferData(GL_ARRAY_BUFFER, sizeof(cube_colors), cube_colors, GL_STATIC_DRAW);
 
   GLushort cube_elements[] = {
+	   0, 1,
+	   0, 3,
+	   0, 4,
+	   1, 2,
+	   1, 5,
+	   2, 3,
+	   2, 6,
+	   3, 7,
+	   4, 5,
+	   4, 7,
+	   5, 6,
+	   6, 7,
+  };
+/*
 	  // front
     0, 1, 2,
     2, 3, 0,
@@ -80,7 +94,7 @@ int init_resources()
     3, 2, 6,
     6, 7, 3,
   };
-
+*/
   glGenBuffers(1, &ibo_cube_elements);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_cube_elements);
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cube_elements), cube_elements, GL_STATIC_DRAW);
@@ -176,7 +190,7 @@ void onDisplay()
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_cube_elements);
   int size;
   glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-  glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
+  glDrawElements(GL_LINES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
 
   glDisableVertexAttribArray(attribute_coord3d);
   glDisableVertexAttribArray(attribute_v_color);
