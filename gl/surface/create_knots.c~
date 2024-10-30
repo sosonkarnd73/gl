@@ -1,0 +1,56 @@
+#include<stdio.h>
+#include<time.h>
+#include<stdlib.h>
+int m,n;
+
+int main()
+{ /* type = 0 open
+     type = 1 clamped
+     type = 2 closed
+  */
+  /* 
+     p : degree of bspline curve
+     n : number of control points
+     m : number of control points
+     N : n-1
+     M : m-1
+  */
+     int type = 0, p=0, i = 0, j = 0;
+     double f1, f2;
+     printf("Type of curve : ");
+     scanf("%d",&type);
+     printf("Degree of curve : ");
+     scanf("%d",&p);
+     printf("Number of control points : ");
+     scanf("%d",&n);
+     
+     m = n+p+1;
+     
+     double factor = 1.0/(m-1);
+     printf("%d \n",m);
+     if(type == 0 || type == 2)
+     {
+	  for(i = 0; i < m; i++){
+	       printf("%lf ",i*factor);
+	  }
+     }
+     if(type == 1)
+     {
+	  for(i = 0; i<=p;i++)
+	  {
+	       printf("%lf ",0.0f);
+	  }
+	  factor = 1.0/(n-p);
+	  for(i=1; i<n-p; i++)
+	  {
+	       printf("%lf ",i*factor);
+	  }
+	  for(i = 0; i<=p;i++)
+	  {
+	       printf("%lf ",1.0f);
+	  }
+     }
+     
+     printf("\n");
+     return 0;
+}

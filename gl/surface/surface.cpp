@@ -1,12 +1,8 @@
-/**
- * From the OpenGL Programming wikibook: http://en.wikibooks.org/wiki/OpenGL_Programming
- * This file is in the public domain.
- * Contributors: Sylvain Beucler
- */
+#include <iostream>
+#include <vector>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <math.h>
+
 /* Use glew.h instead of gl.h to get all the GL prototypes declared */
 #include <GL/glew.h>
 /* Using the GLUT library for the base windowing setup */
@@ -17,7 +13,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "../common/shader_utils.h"
+#include "./shader_utils.h"
 
 int screen_width=800, screen_height=600;
 GLuint vbo_cube_vertices, vbo_cube_colors;
@@ -29,56 +25,21 @@ GLint uniform_mvp;
 int init_resources()
 {
   GLfloat cube_vertices[] = {
-    // front
-    -1.0, -1.0,  1.0,
-     1.0, -1.0,  1.0,
-     1.0,  1.0,  1.0,
-    -1.0,  1.0,  1.0,
-    // back
-    -1.0, -1.0, -1.0,
-     1.0, -1.0, -1.0,
-     1.0,  1.0, -1.0,
-    -1.0,  1.0, -1.0,
+    
   };
   glGenBuffers(1, &vbo_cube_vertices);
   glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_vertices);
   glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
 
   GLfloat cube_colors[] = {
-    // front colors
-    1.0, 0.0, 0.0,
-    0.0, 1.0, 0.0,
-    0.0, 0.0, 1.0,
-    1.0, 1.0, 1.0,
-    // back colors
-    1.0, 0.0, 0.0,
-    0.0, 1.0, 0.0,
-    0.0, 0.0, 1.0,
-    1.0, 1.0, 1.0,
+    
   };
   glGenBuffers(1, &vbo_cube_colors);
   glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_colors);
   glBufferData(GL_ARRAY_BUFFER, sizeof(cube_colors), cube_colors, GL_STATIC_DRAW);
 
   GLushort cube_elements[] = {
-	  // front
-    0, 1, 2,
-    2, 3, 0,
-    // top
-    1, 5, 6,
-    6, 2, 1,
-    // back
-    7, 6, 5,
-    5, 4, 7,
-    // bottom
-    4, 0, 3,
-    3, 7, 4,
-    // left
-    4, 5, 1,
-    1, 0, 4,
-    // right
-    3, 2, 6,
-    6, 7, 3,
+
   };
 
   glGenBuffers(1, &ibo_cube_elements);
@@ -88,8 +49,8 @@ int init_resources()
   GLint link_ok = GL_FALSE;
 
   GLuint vs, fs;
-  if ((vs = create_shader("cube.v.glsl", GL_VERTEX_SHADER))   == 0) return 0;
-  if ((fs = create_shader("cube.f.glsl", GL_FRAGMENT_SHADER)) == 0) return 0;
+  if ((vs = create_shader("surface.v.glsl", GL_VERTEX_SHADER))   == 0) return 0;
+  if ((fs = create_shader("surface.f.glsl", GL_FRAGMENT_SHADER)) == 0) return 0;
 
   program = glCreateProgram();
   glAttachShader(program, vs);
@@ -176,7 +137,7 @@ void onDisplay()
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_cube_elements);
   int size;
   glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-  glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
+  glDrawElements(GL_LINES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
 
   glDisableVertexAttribArray(attribute_coord3d);
   glDisableVertexAttribArray(attribute_v_color);
