@@ -12,6 +12,7 @@
 #include<stdlib.h>
 #include<time.h>
 #include<algorithm>
+#include<math.h>
 using namespace std;
 
 void free_resources();
@@ -41,7 +42,8 @@ public:
      line(point a, point b);
      void print();
      int sign_delta_y(point p);
-     point* intersect(const line *l);  
+     point* intersect(const line *l);
+     void display_bind();
 };
 
 class region{
@@ -54,5 +56,6 @@ public:
      region(vector<point> vect, int i);
      int in_same_region(point p1);
      void print();
+     void display_bind();
 };
 #endif

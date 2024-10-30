@@ -53,11 +53,11 @@ void onDisplay()
    
      /* Describe our vertices array to OpenGL (it can't guess its format automatically) */
 
-     glVertexAttribPointer(attribute_coord2d, 2, GL_FLOAT, GL_TRUE, 0, 0);
+     glVertexAttribPointer(attribute_coord2d, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
      /* Push each element in buffer_vertices to the vertex shader */
-   
-     glDrawArrays(GL_TRIANGLES, 0,3);
+     //glDrawArrays(GL_POINTS, 0,6);
+     glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
      glDisableVertexAttribArray(attribute_coord2d);                  
      glutSwapBuffers();
 }
@@ -65,14 +65,18 @@ void onDisplay()
 int get_vertices()
 {
      int k=0;
-     GLfloat triangle_vertices[]={0.0,  0.0, 8, 8, 2, 1,  8, 8};
-     GLfloat triangle_vertices1[]={-0.1,  -0.1, -0.8, -0.8, -0.2, -0.1,  -0.8, -0.8}; 
-     glGenBuffers(2, vbo_triangle);
+     GLfloat triangle_vertices[]= {
+       -0.4,	0,
+        0,	0.4,
+        0.4,	0,
+        0.4,	-0.4,
+        0,	-0.8,
+       -0.4,	-0.4	};
+     glGenBuffers(1, vbo_triangle);
      glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle[0]);
-     glBindBuffer(GL_ARRAY_BUFFER, vbo_triangle[1]);
-     printf("%d %d\n",vbo_triangle[0], vbo_triangle[1]);
-     glBufferData(GL_ARRAY_BUFFER, sizeof(triangle_vertices), triangle_vertices, GL_STATIC_DRAW);
-     k =1;
+     printf("vbo_triangle[0] :%d \n",vbo_triangle[0]);
+     glBufferData(GL_ARRAY_BUFFER, sizeof(float)*12, triangle_vertices, GL_STATIC_DRAW);
+     k = 1;
      return k;
 }
 
