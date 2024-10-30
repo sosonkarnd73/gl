@@ -1,4 +1,4 @@
-LDLIBS=-lGLEW -lGL -lglut
+LDLIBS=-lGLEW -lGL -lglut -lm
 test : vor.o line.o point.o region.o vor.o vert.o
 	g++ -o test vor.o vert.o line.o point.o region.o $(LDLIBS)
 vor.o : vor.cpp vor.h 

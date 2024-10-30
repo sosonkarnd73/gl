@@ -1,0 +1,3 @@
+1. create_surface12may.cpp
+create input object file. given input for spline surface
+g++ create_surface12may.cpp -o create_multi_mesh

@@ -237,17 +237,18 @@ double b_spline_basis_fun(int i, int p, const double* knot_vector, double u)
      {
 	  if(p == 0)
 	  {
-	       nipu = 1;
+	    if (u >= knot_vector[i] && (u < knotknot_vector[i + 1]))
+	      nipu = 1;
 	  }
 	  else
 	  {
-	       num1 = (u-knot_vector[i]);
-	       den1 = (knot_vector[i+p]-knot_vector[i]);
+	       num1 = (u - knot_vector[i]);
+	       den1 = (knot_vector[i+p] - knot_vector[i]);
 	       if(num1!=0 && den1!=0)
 		    a = ((b_spline_basis_fun(i,p-1,knot_vector,u))*num1)/den1;
 	       	  
-	       num2 = (knot_vector[i+p+1]-u);
-	       den2 = (knot_vector[i+p+1]-knot_vector[i+1]);
+	       num2 = (knot_vector[i+p+1] - u);
+	       den2 = (knot_vector[i+p+1] - knot_vector[i+1]);
 	       if(num2!=0 && den2!=0)
 		    b = ((b_spline_basis_fun(i+1,p-1,knot_vector,u))*num2)/den2;
 	       
