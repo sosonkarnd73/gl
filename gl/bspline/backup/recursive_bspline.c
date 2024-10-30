@@ -20,7 +20,7 @@ void b_spline_curve(int p, double u, const double* knot_vector, const double* co
 void free_resources();
 void key_cb (unsigned char key, int x, int y);
 void onIdle();
-void onTimer();
+void onTimer(int t);
 void onDisplay();
 int init_resources();
 
@@ -33,6 +33,7 @@ int main(int argc, char* argv[])
   
      glutCreateWindow("BSpline Curve");
      GLenum glew_status = glewInit();
+
      if (glew_status != GLEW_OK)
      {
 	  fprintf(stderr, "Error: %s\n", glewGetErrorString(glew_status));
@@ -51,7 +52,6 @@ int main(int argc, char* argv[])
 	  glutDisplayFunc(onDisplay);
 	  glutIdleFunc(onIdle);
 	  glutTimerFunc(1000.0/60.0, onTimer, 0);
-
 	  glutMainLoop();
      }
      free_resources();
@@ -106,6 +106,7 @@ int init_resources()
 	  fprintf(stderr, "Error in fragment shader\n");
 	  return 0;
      }
+     
      program = glCreateProgram();
      glAttachShader(program, vs);
      glAttachShader(program, fs);
@@ -199,7 +200,7 @@ void key_cb ( unsigned char key, int x, int y )
 void onIdle()
 {
 }
-void onTimer()
+void onTimer(int t)
 {
      glutPostRedisplay();
      glutTimerFunc(1000.0/60.0, onTimer, 0);

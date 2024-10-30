@@ -1,39 +1,64 @@
-#ifndef SURFACE_H
-#define SURFACE_H
+#ifndef __SURFACE_H__
+#define __SURFACE_H__
 
-#include <GL/glut.h>
-#include <stdlib.h>
 #include <stdio.h>
-#include <iostream>
-#include <fstream>
+#include <stdlib.h>
 #include <math.h>
-#include "Vec3.h"
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <sstream>
+
+/* Use glew.h instead of gl.h to get all the GL prototypes declared */
+#include <GL/glew.h>
+/* Using the GLUT library for the base windowing setup */
+#include <GL/freeglut.h>
+/* GLM */
+// #define GLM_MESSAGES
+#define GLM_FORCE_RADIANS
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/euler_angles.hpp>
+#include <glm/gtx/quaternion.hpp>
+
+#include "./common/shader_utils.h"
+#define FPS 24.0
+#define GROUND_SIZE 20
+class Mesh;
+
+
+int screen_width=800, screen_height=600;
+GLuint program;
+GLint attribute_v_coord = -1;
+GLint attribute_v_normal = -1;
+GLint uniform_m = -1, uniform_v = -1, uniform_p = -1;
+GLint uniform_m_3x3_inv_transp = -1, uniform_v_inv = -1;
+
 using namespace std;
 
+enum MODES { MODE_OBJECT, MODE_CAMERA, MODE_LIGHT, MODE_LAST } view_mode;
 
-//variables for Flat/Smooth, Control Polygon and Wireframe
-Vec3 vertexnormal[21][21];
-Vec3 facenormal[20][20];
-bool flatSmooth = 0, showControlPolygon = 0, showWireframe = 0;
 
-//variables for B-Spline function
-Vec3 P[21][21];
-Vec3 **ctlPoints;
-float *knotU, *knotV;
-int numContrU, numContrV, degreeU, degreeV;
-float piece = 0.05;
-int numSegment = 1 / piece;
+glm::mat4 transforms[MODE_LAST];
+int last_ticks = 0;
 
-//variables for rotate
-float xAngle = 0, yAngle = 0;
+static unsigned int fps_start = glutGet(GLUT_ELAPSED_TIME);
+static unsigned int fps_frames = 0;
 
-float deBoor(int i, int p, float u, float *knots);
-void bSpline();
-Vec3 faceNormal(Vec3 a, Vec3 b,	Vec3 c);
-void vertexNormal();
-void lightInit();
-void renderScene(void);
-void changeSize(int ww, int hh);
+//Callbacks
+void onDisplay();
+void onTimer(int);
+void onReshape(int width, int height);
+void onSpecialUp(int key, int x, int y);
 void processSpecialKeys(int key, int x, int y);
+void onKey(unsigned char key, int x, int y);
+
+void load_obj(const char* filename, Mesh* mesh);
+int init_resources(char* model_filename, char* vshader_filename, char* fshader_filename);
+void init_view();  //Reset the obj2word and lookat
+void logic();
+void draw();
+void free_resources();
 
 #endif
